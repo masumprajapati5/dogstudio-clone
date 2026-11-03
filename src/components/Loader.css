@@ -8,17 +8,21 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 999999;
   pointer-events: all;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .loader-prelayer {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   will-change: transform;
 }
 
@@ -38,16 +42,18 @@
 }
 
 .loader-main-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   background-color: #0e101a;
   z-index: 4;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-block: 40px;
+  box-sizing: border-box;
   will-change: transform;
 }
 
@@ -63,6 +69,7 @@
   align-items: center;
   justify-content: center;
   will-change: transform, opacity;
+  flex-shrink: 0;
 }
 
 .site-loader-dog {
@@ -119,12 +126,12 @@
 }
 
 /* --------------------------------------------------------------------------
-   Bottom: Minimal Audio Selection Actions
+   Minimal Audio Selection Actions
    -------------------------------------------------------------------------- */
 
 .loader-audio-actions {
   position: absolute;
-  bottom: 48px;
+  top: calc(50% + 90px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -136,6 +143,8 @@
   pointer-events: none;
   transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity;
+  width: max-content;
+  max-width: 90vw;
 }
 
 .loader-audio-actions.is-visible {
@@ -182,7 +191,7 @@
   align-items: center;
   justify-content: center;
   gap: 7px;
-  padding: 4px 12px;
+  padding: 5px 14px;
   background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.42);
@@ -213,16 +222,34 @@
 
 @media (max-width: 768px) {
   .loader-audio-actions {
-    bottom: 36px;
+    top: calc(50% + 86px);
     gap: 10px;
   }
 
   .loader-btn-audio {
-    padding: 9px 20px;
+    padding: 9px 22px;
     font-size: 12px;
   }
 
   .loader-btn-mute {
-    font-size: 11px;
+    font-size: 11.5px;
+  }
+}
+
+/* Short viewports / Landscape mobile */
+@media (max-height: 580px) {
+  .loader-main-layer {
+    justify-content: flex-start;
+    padding-top: 36px;
+    padding-bottom: 50px;
+  }
+
+  .loader-audio-actions {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 28px;
+    margin-bottom: 24px;
   }
 }
