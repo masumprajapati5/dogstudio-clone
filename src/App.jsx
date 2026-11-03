@@ -20,7 +20,7 @@ function App() {
   const [lenisInstance, setLenisInstance] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [menuState, setMenuState] = useState('closed') // 'closed' | 'open' | 'closing'
-  const [soundOn, setSoundOn] = useState(true)
+  const [soundOn, setSoundOn] = useState(false)
   const lenisRef = useRef(null)
   const audioRef = useRef(null)
 
@@ -156,40 +156,13 @@ function App() {
     setSoundOn((prev) => {
       const next = !prev
       if (next) {
-        playSound()
+        playSound().catch(() => {})
       } else {
         pauseSound()
       }
       return next
     })
   }
-
-  // Auto-start sound on page load / first user interaction
-  useEffect(() => {
-    const handleFirstInteraction = () => {
-      if (soundOn && audioRef.current && audioRef.current.paused) {
-        playSound()
-      }
-    }
-
-    if (soundOn) {
-      playSound()
-    }
-
-    window.addEventListener('click', handleFirstInteraction, { passive: true })
-    window.addEventListener('pointerdown', handleFirstInteraction, { passive: true })
-    window.addEventListener('keydown', handleFirstInteraction, { passive: true })
-    window.addEventListener('wheel', handleFirstInteraction, { passive: true })
-    window.addEventListener('touchstart', handleFirstInteraction, { passive: true })
-
-    return () => {
-      window.removeEventListener('click', handleFirstInteraction)
-      window.removeEventListener('pointerdown', handleFirstInteraction)
-      window.removeEventListener('keydown', handleFirstInteraction)
-      window.removeEventListener('wheel', handleFirstInteraction)
-      window.removeEventListener('touchstart', handleFirstInteraction)
-    }
-  }, [soundOn, playSound])
 
   // Pause audio on leave/switch tab or close window, resume when returning
   useEffect(() => {
