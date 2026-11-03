@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, Suspense, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import './App.css'
 import 'lenis/dist/lenis.css'
@@ -24,7 +24,25 @@ function App() {
   const lenisRef = useRef(null)
   const audioRef = useRef(null)
 
-  const handleLoaderComplete = () => {
+  const playSound = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.15
+      const playPromise = audioRef.current.play()
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Handled gracefully when browser blocks unmuted autoplay without prior interaction
+        })
+      }
+    }
+  }, [])
+
+  const pauseSound = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause()
+    }
+  }, [])
+
+  const handleLoaderComplete = useCallback(() => {
     setIsLoaded(true)
     if (soundOn) {
       playSound()
@@ -93,7 +111,7 @@ function App() {
       { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' },
       0.28
     )
-  }
+  }, [soundOn, playSound])
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -134,18 +152,6 @@ function App() {
     }
   }
 
-  const playSound = () => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.15
-      audioRef.current.play().catch(() => {})
-    }
-  }
-  const pauseSound = () => {
-    if (audioRef.current) {
-      audioRef.current.pause()
-    }
-  }
-
   const handleToggleSound = () => {
     setSoundOn((prev) => {
       const next = !prev
@@ -183,7 +189,7 @@ function App() {
       window.removeEventListener('wheel', handleFirstInteraction)
       window.removeEventListener('touchstart', handleFirstInteraction)
     }
-  }, [soundOn])
+  }, [soundOn, playSound])
 
   const handleNavClick = (selector, e) => {
     if (e) e.preventDefault()
@@ -242,7 +248,7 @@ function App() {
   return (
     <>
       <main>
-        <audio ref={audioRef} src="/ambient-luxury-pad.wav" loop preload="none" />
+        <audio ref={audioRef} src="/ambient-luxury-pad.wav" loop preload="auto" />
         <Loader onComplete={handleLoaderComplete} />
         <CustomScrollbar lenis={lenisInstance} visible={isLoaded} />
         <StaggeredMenu
@@ -294,7 +300,9 @@ function App() {
             zIndex: 3,
             pointerEvents: 'none'
           }}>
-          <Dog />
+          <Suspense fallback={null}>
+            <Dog />
+          </Suspense>
         </Canvas>
         <section id='section-1'>
           <nav>

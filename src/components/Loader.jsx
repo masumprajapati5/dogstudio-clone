@@ -3,7 +3,6 @@ import gsap from 'gsap'
 import './Loader.css'
 
 const Loader = ({ onComplete }) => {
-  const [displayProgress, setDisplayProgress] = useState(0)
   const [mounted, setMounted] = useState(true)
 
   const wrapperRef = useRef(null)
@@ -13,7 +12,13 @@ const Loader = ({ onComplete }) => {
   const prelayer3Ref = useRef(null) // Charcoal (#0b0c10)
   const contentRef = useRef(null)
   const canvasRef = useRef(null)
+  const progressCircleRef = useRef(null)
   const animTriggeredRef = useRef(false)
+  const onCompleteRef = useRef(onComplete)
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete
+  }, [onComplete])
 
   // 1. Dog Canvas Runner — high-precision, rock-solid frame animation
   useEffect(() => {
@@ -63,7 +68,7 @@ const Loader = ({ onComplete }) => {
 
   // 2. Exact 2-Second Loader Progress & Staggered Wipe Trigger
   useEffect(() => {
-    // Faster, responsive intro duration for mobile devices to boost Lighthouse FCP
+    const circumference = 420.973415581
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
     const duration = isMobile ? 1100 : 2000
     const startTime = performance.now()
@@ -80,7 +85,7 @@ const Loader = ({ onComplete }) => {
       const content = contentRef.current
 
       if (!mainLayer || !pre1 || !pre2 || !pre3) {
-        if (onComplete) onComplete()
+        if (onCompleteRef.current) onCompleteRef.current()
         setMounted(false)
         return
       }
@@ -106,7 +111,6 @@ const Loader = ({ onComplete }) => {
       }
 
       // B) Multi-layer staggered wipe to the left (xPercent: -100)
-      // Layers cascade: main panel -> Red (#ff3344) -> Midnight (#16192b) -> Charcoal (#0b0c10)
       const layers = [mainLayer, pre1, pre2, pre3]
       const layerDuration = 0.72
 
@@ -125,8 +129,8 @@ const Loader = ({ onComplete }) => {
       // C) Trigger Hero Section entrance together as the last layer wipes across and clears
       tl.call(
         () => {
-          if (onComplete) {
-            onComplete()
+          if (onCompleteRef.current) {
+            onCompleteRef.current()
           }
         },
         null,
@@ -138,13 +142,17 @@ const Loader = ({ onComplete }) => {
       const elapsed = now - startTime
       const progressPercent = Math.min(100, (elapsed / duration) * 100)
 
-      setDisplayProgress(progressPercent)
+      if (progressCircleRef.current) {
+        const offset = Math.max(0, circumference - (circumference * progressPercent) / 100)
+        progressCircleRef.current.style.strokeDashoffset = `${offset}`
+      }
 
       if (elapsed < duration) {
         rafId = requestAnimationFrame(tick)
       } else {
-        setDisplayProgress(100)
-        // Immediate start to exit wipe without artificial pause
+        if (progressCircleRef.current) {
+          progressCircleRef.current.style.strokeDashoffset = '0'
+        }
         startStaggeredExit()
       }
     }
@@ -154,12 +162,11 @@ const Loader = ({ onComplete }) => {
     return () => {
       cancelAnimationFrame(rafId)
     }
-  }, [onComplete])
+  }, [])
 
   if (!mounted) return null
 
   const circumference = 420.973415581
-  const strokeDashoffset = Math.max(0, circumference - (circumference * displayProgress) / 100)
 
   return (
     <div ref={wrapperRef} className="site-loader-wrapper" aria-label="Loading site">
@@ -183,11 +190,12 @@ const Loader = ({ onComplete }) => {
             <svg viewBox="0 0 136 136">
               <circle r="67" cx="68" cy="68" className="site-loader-stroke" />
               <circle
+                ref={progressCircleRef}
                 r="67"
                 cx="68"
                 cy="68"
                 className="site-loader-percent"
-                style={{ strokeDashoffset }}
+                style={{ strokeDashoffset: circumference }}
               />
             </svg>
           </div>
