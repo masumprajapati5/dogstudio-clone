@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Dogstudio Staggered Preloader & Curtain Wipe Transition
+   ========================================================================== */
+
+.site-loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  pointer-events: all;
+  overflow: hidden;
+}
+
+.loader-prelayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  will-change: transform;
+}
+
+.loader-prelayer.prelayer-3 {
+  background-color: #0b0c10;
+  z-index: 1;
+}
+
+.loader-prelayer.prelayer-2 {
+  background-color: #16192b;
+  z-index: 2;
+}
+
+.loader-prelayer.prelayer-1 {
+  background-color: #ff3344;
+  z-index: 3;
+}
+
+.loader-main-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0e101a;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.site-loader-content {
+  position: relative;
+  width: 136px;
+  height: 136px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+.site-loader-dog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130px;
+  height: 130px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.site-loader-canvas {
+  width: 130px;
+  height: 130px;
+  display: block;
+}
+
+.site-loader-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 136px;
+  height: 136px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.site-loader-progress svg {
+  width: 136px;
+  height: 136px;
+  display: block;
+  transform: rotate(-90deg);
+}
+
+.site-loader-stroke {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 1px;
+}
+
+.site-loader-percent {
+  fill: none;
+  stroke: #ff3344;
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-dasharray: 420.973415581px;
+  stroke-dashoffset: 420.973415581px;
+  transition: stroke-dashoffset 0.05s linear;
+}

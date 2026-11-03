@@ -1,0 +1,1540 @@
+@font-face {
+  font-family: 'GT Sectra Display';
+  src: url('/fonts/GTSectraDisplay-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT Sectra Display';
+  src: url('/fonts/GTSectraDisplay-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT Sectra Display';
+  src: url('/fonts/GTSectraDisplay-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   Hide Native Browser Scrollbars (Replaced by Emotion Agency Custom Scrollbar)
+   ========================================================================== */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background-color: black;
+  color: whitesmoke;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  z-index: 2;
+  width: 100%;
+}
+
+.bg-texture {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-image: url('/background-l.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: all 0.3s linear;
+  pointer-events: none;
+}
+
+#canvas-elem,
+#canvas-elem * {
+  pointer-events: none !important;
+}
+
+#canvas-elem {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+#section-1 {
+
+  --gap: 5rem;
+  position: relative;
+  z-index: 10;
+
+  nav {
+    position: relative;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2.5rem;
+    padding-top: 2.5rem;
+
+    .nav-showreel-btn {
+      font-size: 0.8rem;
+      font-weight: 200;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      padding: 0.4rem 0.85rem;
+      border-radius: 20px;
+      transition: background 0.25s ease, transform 0.25s ease;
+      user-select: none;
+
+      i {
+        color: #ff3344;
+        transition: transform 0.25s ease;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-1px);
+
+        i {
+          transform: translateX(3px);
+        }
+      }
+    }
+
+    .nav-menu-wrapper {
+      position: relative;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    svg {
+      max-width: 5rem;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .middle {
+    display: flex;
+    gap: var(--gap);
+
+
+    .left,
+    .right {
+      width: 50%;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-block: 5rem;
+    }
+
+    h1 {
+      font-family: 'GT Sectra Display', Times, Georgia, serif;
+      font-size: 5.5rem;
+      font-weight: 700;
+      line-height: 0.89;
+      letter-spacing: -4px;
+      text-align: right;
+      perspective: 2000px;
+
+      .hero-title-line {
+        display: block;
+        overflow: visible;
+
+        .fx-letter {
+          display: inline-block;
+          transform-origin: 0 100%;
+          transform-style: preserve-3d;
+          will-change: transform, opacity;
+        }
+      }
+    }
+  }
+
+  .bottom {
+
+    display: flex;
+    gap: var(--gap);
+
+    .left,
+    .right {
+      width: 50%;
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1rem;
+
+      p {
+        font-weight: 350;
+        line-height: 1.5;
+      }
+
+      .second-paragraph {
+        font-size: 0.7rem;
+        color: rgba(203, 213, 225, 0.85);
+      }
+    }
+  }
+
+
+
+  
+  .first-line {
+    width: 30rem;
+    background-color: rgba(255, 0, 0, 0.5);
+    height: 1px;
+    position: absolute;
+    transform: rotate(45deg) translate(-10rem, -25rem);
+  }
+
+  .second-line {
+    width: 10rem;
+    background-color: rgba(255, 0, 0, 0.5);
+    height: 1px;
+    position: absolute;
+    transform: rotate(135deg);
+    top: 20%;
+    right: 6%;
+  }
+}
+
+.mobile-showreel-btn {
+  display: none;
+}
+
+#section-2 {
+  position: relative;
+  z-index: 10;
+
+  .titles {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15rem;
+    margin-block: 10rem;
+
+    .title {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 3.5rem;
+      opacity: 0.48;
+      padding-block: 1.8rem;
+      transition: all 0.3s linear;
+      cursor: pointer;
+      color: #BBC2E5;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 4.8rem;
+      font-weight: 100;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    small {
+      width: 150px;
+      flex-shrink: 0;
+      text-align: right;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 200;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(203, 213, 225, 0.75);
+      margin-top: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .title:hover {
+      opacity: 1;
+      color: #ffffff;
+    }
+  }
+}
+
+main:has(#section-2 .title:hover) .bg-texture {
+  opacity: 0 !important;
+}
+
+.images {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.3s linear;
+    pointer-events: none;
+  }
+}
+
+main:has(#section-2 .title[img-title="tomorrowland"]:hover) .images #tomorrowland {
+  opacity: 1;
+  background-color: rgb(4, 7, 24);
+}
+
+main:has(#section-2 .title[img-title="navy-pier"]:hover) .images #navy-pier {
+  opacity: 1;
+  background-color: rgb(4, 7, 24);
+}
+
+main:has(#section-2 .title[img-title="msi-chicago"]:hover) .images #msi-chicago {
+  opacity: 1;
+  background-color: rgb(4, 7, 24);
+}
+
+main:has(#section-2 .title[img-title="phone"]:hover) .images #phone {
+  opacity: 1;
+  background-color: rgb(4, 7, 24);
+}
+
+main:has(#section-2 .title[img-title="kikk"]:hover) .images #kikk {
+  opacity: 1;
+  background-color: rgba(1, 15, 92, 0.679);
+}
+
+main:has(#section-2 .title[img-title="kennedy"]:hover) .images #kennedy {
+  opacity: 1;
+  background-color: rgb(4, 7, 24);
+}
+
+main:has(#section-2 .title[img-title="opera"]:hover) .images #opera {
+  opacity: 1;
+  background-color: rgb(176, 4, 4);
+}
+
+#section-3 {
+  padding-top: 14rem;
+  padding-inline: 10rem;
+  position: relative;
+  z-index: 2;
+  min-height: initial;
+
+  .top {
+    display: flex;
+    width: 100%;
+    gap: 5rem;
+  }
+
+  .left,
+  .right {
+    width: 50%;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(203, 213, 225, 0.85);
+    margin-bottom: 2rem;
+  }
+
+  .top .left {
+    h3 {
+      font-family: 'GT Sectra Display', Times, Georgia, serif;
+      font-size: 4rem;
+      line-height: 1.05;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -2px;
+    }
+  }
+}
+
+#section-4 {
+  padding-inline: 10rem;
+  position: relative;
+  z-index: 10;
+  margin-top: 10rem;
+
+  .bottom {
+    display: flex;
+    width: 100%;
+    gap: 5rem;
+  }
+
+  .left,
+  .right {
+    width: 50%;
+  }
+
+  .left {
+    pointer-events: none;
+  }
+
+  .right {
+    display: flex;
+    gap: 3.5rem;
+
+    .about-col {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+
+      p {
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 300;
+        color: rgba(187, 194, 229, 0.7);
+        line-height: 1.65;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.values-link {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 0.5rem;
+  width: fit-content;
+  transition: color 0.3s ease;
+}
+
+.values-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 140px;
+  height: 1.5px;
+  background-color: #ff2a2a;
+  transition: width 0.3s ease;
+}
+
+.values-link:hover::after {
+  width: 175px;
+}
+
+.site-footer {
+  width: 100%;
+  padding-inline: 10rem;
+  padding-top: 6.5rem;
+  padding-bottom: 2.5rem;
+  position: relative;
+  z-index: 10;
+  color: #ffffff;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(to top,
+      #000000 0%,
+      #000000 12%,
+      rgba(10, 11, 16, 0.96) 24%,
+      rgba(10, 11, 16, 0.85) 36%,
+      rgba(10, 11, 16, 0.68) 48%,
+      rgba(10, 11, 16, 0.48) 60%,
+      rgba(10, 11, 16, 0.28) 72%,
+      rgba(10, 11, 16, 0.14) 82%,
+      rgba(10, 11, 16, 0.05) 90%,
+      rgba(10, 11, 16, 0.01) 96%,
+      rgba(10, 11, 16, 0) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.site-footer-top,
+.site-footer-divider,
+.site-footer-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+.site-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 2rem;
+}
+
+.site-footer-locations {
+  display: flex;
+  gap: 7rem;
+}
+
+.site-footer-locations .city {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 200;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.accent-dot {
+  color: #ff2a2a;
+  font-weight: 500;
+  margin-left: 2px;
+}
+
+.site-footer-social {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.6rem;
+}
+
+.we-make-good-shit-svg {
+  width: 32px;
+  height: auto;
+  fill: #ffffff;
+  display: block;
+}
+
+.site-footer-social .social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(203, 213, 225, 0.82);
+}
+
+.site-footer-social .social-links a {
+  color: rgba(203, 213, 225, 0.85);
+  text-decoration: none;
+  font-weight: 200;
+  transition: color 0.3s ease;
+}
+
+.site-footer-social .social-links a:hover {
+  color: #ffffff;
+}
+
+.site-footer-social .social-links span {
+  color: rgba(203, 213, 225, 0.65);
+  user-select: none;
+}
+
+.site-footer-divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(182, 193, 250, 0.12);
+  margin-block: 2.2rem 1.6rem;
+}
+
+.site-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-footer-contact {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(160, 168, 220, 0.7);
+  display: flex;
+  align-items: center;
+}
+
+.contact-dash {
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: rgba(187, 194, 229, 0.35);
+  margin-inline: 1.2rem;
+}
+
+.site-footer-contact a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 200;
+  transition: color 0.3s ease;
+}
+
+.site-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+.site-footer-policy {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(160, 168, 220, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.site-footer-policy:hover {
+  color: #ffffff;
+}
+
+.site-footer-languages {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(160, 168, 220, 0.7);
+}
+
+.site-footer-languages .flag-badge {
+  font-size: 0.95rem;
+  margin-left: 0.2rem;
+}
+
+.site-footer-languages .lang-name {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.site-footer-languages i {
+  font-size: 0.9rem;
+  color: rgba(160, 168, 220, 0.7);
+}
+
+.site-volume {
+  position: fixed;
+  right: 40px;
+  bottom: 30px;
+  z-index: 989;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: all;
+  padding: 6px 4px;
+  color: #ffffff;
+  user-select: none;
+  transition: opacity 0.3s ease, transform 0.25s ease;
+}
+
+.site-volume:hover {
+  transform: translateY(-1px);
+}
+
+/* Automatically hides the sound button while the drawer menu is open */
+main:has(.staggered-menu-scope[data-open="true"]) .site-volume,
+body:has(.staggered-menu-scope[data-open="true"]) .site-volume {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.sound-label {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 200;
+  letter-spacing: 0.03rem;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.82);
+  transition: color 0.3s ease;
+}
+
+.site-volume:hover .sound-label,
+.site-volume.is-active .sound-label {
+  color: #ffffff;
+}
+
+/* Unique Center-Pivoted Harmonic Sound Wave */
+.sound-wave {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5px;
+  height: 14px;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.sound-bar {
+  width: 1.5px;
+  height: 14px;
+  background-color: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
+  transform-origin: center center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+/* Symmetrical harmonic resting curve when Sound is OFF */
+.sound-bar.bar-1 {
+  transform: scaleY(0.25);
+}
+
+.sound-bar.bar-2 {
+  transform: scaleY(0.48);
+}
+
+.sound-bar.bar-3 {
+  transform: scaleY(0.78);
+}
+
+.sound-bar.bar-4 {
+  transform: scaleY(0.48);
+}
+
+.sound-bar.bar-5 {
+  transform: scaleY(0.25);
+}
+
+.site-volume:hover .sound-bar {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Organic harmonic dancing spectrum when Sound is ON */
+.site-volume.is-active .sound-bar {
+  background-color: #ffffff;
+  animation: soundSpectrumDance 1.2s ease-in-out infinite alternate;
+}
+
+.site-volume.is-active .sound-bar.bar-1 {
+  animation-delay: 0.05s;
+  animation-duration: 0.82s;
+}
+
+.site-volume.is-active .sound-bar.bar-2 {
+  animation-delay: 0.25s;
+  animation-duration: 1.15s;
+}
+
+.site-volume.is-active .sound-bar.bar-3 {
+  animation-delay: 0.12s;
+  animation-duration: 0.95s;
+}
+
+.site-volume.is-active .sound-bar.bar-4 {
+  animation-delay: 0.38s;
+  animation-duration: 1.1s;
+}
+
+.site-volume.is-active .sound-bar.bar-5 {
+  animation-delay: 0.18s;
+  animation-duration: 0.85s;
+}
+
+@keyframes soundSpectrumDance {
+  0% {
+    transform: scaleY(0.25);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleY(0.4);
+    opacity: 0.7;
+  }
+}
+
+
+
+/* ==========================================================================
+   Emotion Agency Inspired Apple-Blob Menu & Settings Pop-up Modal
+   ========================================================================== */
+
+.menu-toggle-btn {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  position: relative;
+  z-index: 10001;
+  padding: 0;
+  overflow: visible;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fixed-menu-toggle {
+  position: fixed !important;
+  top: 2.5rem;
+  right: 2.5rem;
+  z-index: 100000 !important;
+  width: 44px;
+  height: 44px;
+}
+
+.menu-toggle-btn:hover {
+  background: transparent !important;
+  opacity: 0.75;
+  transform: scale(1.05);
+}
+
+.menu-toggle-btn:focus,
+.menu-toggle-btn:focus-visible,
+.menu-toggle-btn:active,
+.menu-toggle-btn.is-active {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.menu-lottie-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transform: scale(1.6);
+  overflow: visible;
+}
+
+.menu-lottie-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  overflow: visible;
+}
+
+/* Ensure bars are crisp pure white */
+.menu-lottie-icon svg path {
+  stroke: #ffffff !important;
+}
+
+
+
+
+
+/* ==========================================================================
+   Comprehensive Multi-Device Responsive Design System
+   (Ultra-Wide 4K -> Standard Laptop -> Tablet Portrait -> Mobile -> Mini)
+   ========================================================================== */
+
+/* --- 1. Large Screens & 4K Displays (>= 1600px) --- */
+@media (min-width: 1600px) {
+  #section-1 .middle h1 {
+    font-size: clamp(5.5rem, 5.2vw, 7.5rem);
+    letter-spacing: -4px;
+  }
+
+  #section-2 .titles {
+    padding-left: clamp(14rem, 15vw, 22rem);
+    margin-block: 12rem;
+  }
+
+  #section-2 .titles h1,
+  #section-2 .titles h2 {
+    font-size: clamp(4.8rem, 4.5vw, 6.2rem);
+  }
+
+  #section-3 {
+    padding-inline: clamp(10rem, 12vw, 20rem);
+    padding-top: 16rem;
+  }
+
+  #section-3 .top .left h2,
+  #section-3 .top .left h3 {
+    font-size: clamp(4rem, 3.8vw, 5.4rem);
+  }
+
+  #section-4 {
+    padding-inline: clamp(10rem, 12vw, 20rem);
+    margin-top: 12rem;
+  }
+
+  #section-4 .right .about-col p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .site-footer {
+    padding-inline: clamp(10rem, 12vw, 20rem);
+  }
+}
+
+/* --- 2. Small Desktop & Laptop (1024px to 1440px) --- */
+@media (max-width: 1440px) {
+  #section-2 .titles {
+    padding-left: 9rem;
+    margin-block: 8rem;
+  }
+
+  #section-3 {
+    padding-inline: 7rem;
+    padding-top: 11rem;
+  }
+
+  #section-4 {
+    padding-inline: 7rem;
+    margin-top: 8rem;
+  }
+
+  .site-footer {
+    padding-inline: 7rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  #section-1 {
+    --gap: 3.5rem;
+  }
+
+  #section-1 nav {
+    padding: 2rem 2.2rem 1.25rem;
+  }
+
+  #section-1 .middle h1 {
+    padding-block: 2rem;
+  }
+
+  #section-1 .first-line {
+    width: 24rem;
+  }
+
+  #section-2 .titles {
+    padding-left: 6rem;
+    padding-right: 2rem;
+    margin-block: 5rem 8rem;
+  }
+
+  #section-2 .titles .title {
+    gap: 2.5rem;
+    padding-block: 1.5rem;
+  }
+
+  #section-2 .titles h1,
+  #section-2 .titles h2 {
+    font-size: clamp(3.4rem, 5vw, 4.2rem);
+  }
+
+  #section-3 {
+    padding-inline: 5rem;
+    padding-top: 9rem;
+  }
+
+  #section-3 .top .left h2,
+  #section-3 .top .left h3 {
+    font-size: clamp(3rem, 4.5vw, 3.8rem);
+    letter-spacing: -1.5px;
+  }
+
+  #section-4 {
+    padding-inline: 5rem;
+    margin-top: 7rem;
+  }
+
+  #section-4 .bottom {
+    gap: 3.5rem;
+  }
+
+  #section-4 .right {
+    gap: 2.5rem;
+  }
+
+  .site-footer {
+    padding-inline: 5rem;
+    padding-top: 5.5rem;
+  }
+
+  .site-footer-locations {
+    gap: 4.5rem;
+  }
+}
+
+/* --- 3. Tablet Devices (768px to 1023px) --- */
+@media (max-width: 1023px) {
+  .fixed-menu-toggle {
+    top: 1.5rem;
+    right: 1.8rem;
+  }
+
+  #section-1 nav {
+    padding: 1.5rem 1.8rem 1rem;
+  }
+
+  #section-2 .titles {
+    padding-left: 3.5rem;
+    padding-right: 2rem;
+    margin-block: 5.5rem;
+  }
+
+  #section-2 .titles .title {
+    gap: 2rem;
+    padding-block: 1.35rem;
+  }
+
+  #section-2 .titles h1,
+  #section-2 .titles h2 {
+    font-size: clamp(2.6rem, 5vw, 3.4rem);
+    letter-spacing: -0.5px;
+  }
+
+  #section-2 .titles small {
+    width: 110px;
+    font-size: 0.58rem;
+  }
+
+  #section-3 {
+    padding-inline: 3.5rem;
+    padding-top: 7rem;
+  }
+
+  #section-3 .top {
+    gap: 2.5rem;
+  }
+
+  #section-3 .top .left {
+    width: 70%;
+  }
+
+  #section-3 .top .right {
+    width: 30%;
+  }
+
+  #section-3 .top .left h2,
+  #section-3 .top .left h3 {
+    font-size: clamp(2.6rem, 5vw, 3.3rem);
+    letter-spacing: -1px;
+  }
+
+  #section-4 {
+    padding-inline: 3.5rem;
+    margin-top: 5.5rem;
+  }
+
+  #section-4 .bottom {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  #section-4 .bottom .left {
+    display: none;
+  }
+
+  #section-4 .bottom .right {
+    width: 100%;
+    gap: 2.5rem;
+  }
+
+  #section-4 .bottom .right .about-col {
+    width: 50%;
+  }
+
+  .site-footer {
+    padding-inline: 3.5rem;
+    padding-top: 4.5rem;
+  }
+
+  .site-footer-locations {
+    gap: 3.5rem;
+  }
+
+  .site-footer-locations .city {
+    font-size: 1.2rem;
+  }
+}
+
+/* --- 4. Mobile Devices (<= 767px) --- */
+@media (max-width: 767px) {
+
+  html,
+  body,
+  #root,
+  main {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  #section-1 {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 5rem;
+  }
+
+  .fixed-menu-toggle {
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  #section-1 nav {
+    padding: 1.25rem 1.25rem 0.75rem;
+  }
+
+  #section-1 nav svg {
+    max-width: 5rem;
+  }
+
+  #section-1 nav .nav-showreel-btn {
+    display: none !important;
+  }
+
+  #section-1 .mobile-showreel-btn,
+  .mobile-showreel-btn {
+    display: inline-flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    align-items: center;
+    gap: 0.5rem;
+    margin-inline: 3rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.5rem;
+    padding: 0.45rem 0.9rem;
+    width: fit-content;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.25s ease, transform 0.25s ease;
+    z-index: 20;
+    position: relative;
+  }
+
+  .mobile-showreel-btn i {
+    color: #ff3344;
+    font-size: 1.5rem;
+    transition: transform 0.25s ease;
+  }
+
+  .mobile-showreel-btn:active {
+    background: rgba(255, 255, 255, 0.16);
+    transform: scale(0.97);
+  }
+
+  .menu-toggle-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  #section-1 .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    width: 100%;
+  }
+
+  #section-1 .middle {
+    flex-direction: column;
+    gap: 0;
+    padding-inline: 3rem;
+  }
+
+  #section-1 .middle .left {
+    width: 100%;
+    justify-content: flex-start;
+    padding-block: 2rem 0.8rem;
+  }
+
+  #section-1 .middle .right {
+    display: none;
+  }
+
+  #section-1 .middle h1 {
+    text-align: left;
+    line-height: 0.95;
+  }
+
+  #section-1 .bottom {
+    flex-direction: column;
+    gap: 0;
+    padding-inline: 3rem;
+    margin-top: 1.5rem;
+  }
+
+  #section-1 .bottom .left {
+    display: none;
+  }
+
+  #section-1 .bottom .right {
+    width: 100%;
+    max-width: 100%;
+    gap: 0.75rem;
+  }
+
+  #section-1 .bottom .right p {
+    line-height: 1.5;
+    font-weight: 350;
+  }
+
+  #section-1 .bottom .right p br {
+    display: none;
+  }
+
+  #section-1 .bottom .right .second-paragraph {
+    font-size: 0.78rem;
+    margin-top: 0.25rem;
+    color: #A0A8DCB2;
+  }
+
+  #section-1 .first-line {
+    width: 14rem;
+    transform: rotate(45deg) translate(-4rem, -10rem);
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  #section-1 .second-line {
+    width: 6rem;
+    top: 12%;
+    right: 2%;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  #section-2 .titles {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    margin-block: 9rem;
+  }
+
+  #section-2 .titles .title {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding-block: 1.2rem;
+    opacity: 0.45;
+  }
+
+  #section-2 .titles .title:hover,
+  #section-2 .titles .title:active {
+    opacity: 1;
+    color: #ffffff;
+  }
+
+  #section-2 .titles h1,
+  #section-2 .titles h2 {
+    font-size: clamp(1.9rem, 7.5vw, 2.75rem);
+    font-weight: 200;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+  }
+
+  #section-2 .titles small {
+    width: auto;
+    text-align: left;
+    margin-top: 0;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+  }
+
+  #section-3 {
+    padding-inline: 3rem;
+    padding-top: 5rem;
+  }
+
+  #section-3 .top {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  #section-3 .top .left {
+    width: 100%;
+  }
+
+  #section-3 .top .right {
+    display: none;
+  }
+
+  #section-3 .section-tag {
+    font-size: 0.62rem;
+    margin-bottom: 1.25rem;
+  }
+
+  #section-3 .top .left h2,
+  #section-3 .top .left h3 {
+    font-size: clamp(2.1rem, 8vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  #section-3 .top .left h2,
+  #section-3 .top .left h3 br {
+    display: none;
+  }
+
+  #section-4 {
+    padding-inline: 3rem;
+  }
+
+  #section-4 .bottom {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  #section-4 .bottom .left {
+    display: none;
+  }
+
+  #section-4 .bottom .right {
+    width: 100%;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  #section-4 .bottom .right .about-col {
+    width: 100%;
+  }
+
+  #section-4 .bottom .right .about-col p {
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .values-link {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .site-footer {
+    padding-inline: 3rem;
+    padding-top: 4rem;
+    padding-bottom: 5.5rem;
+  }
+
+  .site-footer-locations .city {
+    font-size: 1.15rem;
+  }
+
+
+  .site-footer-social .social-links {
+    font-size: 0.78rem;
+    gap: 0.6rem;
+  }
+
+  .site-footer-bottom {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 3rem;
+  }
+
+  .site-volume {
+    right: 16px;
+    bottom: 16px;
+    padding: 6px 12px;
+    z-index: 999;
+  }
+}
+
+/* --- 5. Small Mobile Screens (<= 480px) --- */
+@media (max-width: 480px) {
+  .fixed-menu-toggle {
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  #section-1 nav {
+    padding: 1rem 1rem 0.5rem;
+  }
+
+  #section-1 nav svg {
+    max-width: 3.6rem;
+  }
+
+  #section-1 .mobile-showreel-btn,
+  .mobile-showreel-btn {
+    margin-inline: 1rem;
+    margin-top: 1rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.78rem;
+  }
+
+  #section-1 .hero-content {
+    gap: 1rem;
+  }
+
+  #section-1 .middle {
+    padding-inline: 1rem;
+  }
+
+  #section-1 .middle .left {
+    padding-block: 1.2rem 0.4rem;
+  }
+
+  #section-1 .middle h1 {
+    font-size: 4.5rem;
+  }
+
+  #section-1 .bottom {
+    padding-inline: 1rem;
+    margin-top: 1.2rem;
+  }
+
+  #section-1 .bottom .right p {
+    font-size: 0.88rem;
+  }
+
+  #section-1 .bottom .right .second-paragraph {
+    font-size: 0.72rem;
+  }
+
+  #section-1 .first-line,
+  #section-1 .second-line {
+    display: none;
+  }
+
+  #section-2 .titles {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-block: 3rem;
+  }
+
+  #section-2 .titles .title {
+    padding-block: 1rem;
+  }
+
+  #section-2 .titles h1,
+  #section-2 .titles h2 {
+    font-size: clamp(1.65rem, 7vw, 2.2rem);
+  }
+
+  #section-2 .titles small {
+    font-size: 0.58rem;
+  }
+
+  #section-3 {
+    padding-inline: 1rem;
+    padding-top: 4rem;
+  }
+
+  #section-3 .top .left h2,
+  #section-3 .top .left h3 {
+    font-size: clamp(1.8rem, 7.8vw, 2.3rem);
+  }
+
+  #section-4 {
+    padding-inline: 1rem;
+    margin-top: 3.5rem;
+  }
+
+  #section-4 .bottom .right .about-col p {
+    font-size: 0.88rem;
+  }
+
+  .values-link {
+    font-size: 0.82rem;
+  }
+
+  .site-footer {
+    padding-inline: 1rem;
+  }
+
+  .site-footer-locations {
+    gap: 1rem 1.8rem;
+  }
+
+  .site-footer-locations .city {
+    font-size: 1.05rem;
+  }
+}
+
+/* --- 6. Very Small Screens (<= 360px) --- */
+@media (max-width: 360px) {
+  #section-1 nav svg {
+    max-width: 3.2rem;
+  }
+
+  #section-1 .middle h1 {
+    font-size: 3.9rem;
+  }
+
+  #section-2 .titles h1,
+  #section-2 .titles h2 {
+    font-size: 1.55rem;
+  }
+
+  #section-3 .top .left h2,
+  #section-3 .top .left h3 {
+    font-size: 1.7rem;
+  }
+}
