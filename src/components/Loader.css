@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Dogstudio Preloader & Audio Entry Curtain
+   Dogstudio Preloader & Minimal Audio Entry
    ========================================================================== */
 
 .site-loader-wrapper {
@@ -52,7 +52,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Step 1: Running Dog with Circular Stroke Loader
+   Center: Running Dog with Circular Stroke Loader
    -------------------------------------------------------------------------- */
 
 .site-loader-content {
@@ -104,7 +104,7 @@
 
 .site-loader-stroke {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.16);
+  stroke: rgba(255, 255, 255, 0.14);
   stroke-width: 1px;
 }
 
@@ -119,77 +119,12 @@
 }
 
 /* --------------------------------------------------------------------------
-   Step 2: Agency Audio Choice Screen (like emotion-agency.com)
+   Bottom: Minimal Audio Selection Actions
    -------------------------------------------------------------------------- */
 
-.loader-agency-screen {
+.loader-audio-actions {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  box-sizing: border-box;
-  animation: agencyFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: opacity, transform;
-}
-
-@keyframes agencyFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.loader-agency-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 560px;
-  margin-top: -40px;
-  user-select: none;
-}
-
-.loader-agency-logo-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.loader-agency-logo {
-  width: 260px;
-  max-width: 80vw;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.4));
-}
-
-.loader-agency-tagline {
-  margin-top: 28px;
-  margin-bottom: 0;
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.65);
-  max-width: 440px;
-}
-
-/* Bottom Audio Action Buttons */
-.loader-agency-actions {
-  position: absolute;
-  bottom: 52px;
+  bottom: 48px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -197,62 +132,79 @@
   align-items: center;
   gap: 12px;
   z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
 }
 
-.loader-action-btn {
+.loader-audio-actions.is-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Primary Button: Enter with audio (Minimalist pill) */
+.loader-btn-audio {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 9px;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12.5px;
+  font-weight: 300;
+  letter-spacing: 0.025em;
   cursor: pointer;
   user-select: none;
-  border: none;
-  background: transparent;
   outline: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none;
+  transform: none;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
-.loader-action-primary {
-  padding: 13px 32px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+.loader-btn-audio:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
   color: #ffffff;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
 
-.loader-action-primary:hover {
-  background: rgba(255, 51, 68, 0.18);
-  border-color: #ff3344;
-  box-shadow: 0 0 28px rgba(255, 51, 68, 0.38);
-  transform: translateY(-2px);
+.loader-btn-audio:active {
+  background: rgba(255, 255, 255, 0.16);
 }
 
-.loader-action-primary:active {
-  transform: translateY(0) scale(0.98);
+/* Secondary Button: Enter without audio (Subtle text button) */
+.loader-btn-mute {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 4px 12px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.42);
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11.5px;
+  font-weight: 300;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  box-shadow: none;
+  transform: none;
+  transition: color 0.25s ease;
 }
 
-.loader-action-secondary {
-  padding: 8px 18px;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
+.loader-btn-mute:hover {
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.loader-action-secondary:hover {
-  color: #ffffff;
-  opacity: 1;
-}
-
-.loader-action-icon {
+.loader-btn-icon {
   flex-shrink: 0;
+  opacity: 0.85;
 }
 
 /* --------------------------------------------------------------------------
@@ -260,28 +212,17 @@
    -------------------------------------------------------------------------- */
 
 @media (max-width: 768px) {
-  .loader-agency-logo {
-    width: 210px;
-  }
-
-  .loader-agency-tagline {
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    max-width: 300px;
-    margin-top: 20px;
-  }
-
-  .loader-agency-actions {
-    bottom: 38px;
+  .loader-audio-actions {
+    bottom: 36px;
     gap: 10px;
   }
 
-  .loader-action-primary {
-    padding: 12px 28px;
-    font-size: 12.5px;
+  .loader-btn-audio {
+    padding: 9px 20px;
+    font-size: 12px;
   }
 
-  .loader-action-secondary {
-    font-size: 11.5px;
+  .loader-btn-mute {
+    font-size: 11px;
   }
 }

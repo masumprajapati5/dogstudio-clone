@@ -191,6 +191,37 @@ function App() {
     }
   }, [soundOn, playSound])
 
+  // Pause audio on leave/switch tab or close window, resume when returning
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (audioRef.current && !audioRef.current.paused) {
+          audioRef.current.pause()
+        }
+      } else {
+        if (soundOn && isLoaded && audioRef.current && audioRef.current.paused) {
+          playSound().catch(() => {})
+        }
+      }
+    }
+
+    const handlePageHide = () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('pagehide', handlePageHide)
+    window.addEventListener('beforeunload', handlePageHide)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('pagehide', handlePageHide)
+      window.removeEventListener('beforeunload', handlePageHide)
+    }
+  }, [soundOn, isLoaded, playSound])
+
   const handleNavClick = (selector, e) => {
     if (e) e.preventDefault()
     closeMenu()
