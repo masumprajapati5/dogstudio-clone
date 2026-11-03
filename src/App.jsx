@@ -38,10 +38,14 @@ function App() {
     }
   }, [])
 
-  const handleLoaderComplete = useCallback(() => {
+  const handleLoaderComplete = useCallback((withAudio = true) => {
     setIsLoaded(true)
-    if (soundOn) {
-      playSound()
+    if (withAudio) {
+      setSoundOn(true)
+      playSound().catch(() => {})
+    } else {
+      setSoundOn(false)
+      pauseSound()
     }
     const tl = gsap.timeline({ defaults: { ease: 'power4.out'} })
 
