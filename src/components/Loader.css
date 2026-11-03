@@ -113,3 +113,92 @@
   stroke-dashoffset: 420.973415581px;
   transition: stroke-dashoffset 0.05s linear;
 }
+
+/* ==========================================================================
+   Click to Enter Prompt (Autoplay Policy Gate)
+   ========================================================================== */
+
+.site-loader-wrapper.needs-click {
+  cursor: pointer;
+}
+
+.loader-enter-container {
+  position: absolute;
+  top: calc(50% + 95px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+  pointer-events: all;
+  animation: loaderFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes loaderFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 15px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.loader-enter-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  padding: 10px 24px;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.loader-enter-btn:hover {
+  background: rgba(255, 51, 68, 0.16);
+  border-color: #ff3344;
+  transform: scale(1.04);
+}
+
+.enter-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ff3344;
+  box-shadow: 0 0 8px #ff3344;
+  animation: enterPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes enterPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.65);
+  }
+}
+
+.enter-subtext {
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  white-space: nowrap;
+}

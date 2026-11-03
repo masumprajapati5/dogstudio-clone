@@ -27,13 +27,9 @@ function App() {
   const playSound = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.volume = 0.15
-      const playPromise = audioRef.current.play()
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Handled gracefully when browser blocks unmuted autoplay without prior interaction
-        })
-      }
+      return audioRef.current.play()
     }
+    return Promise.reject(new Error('Audio not ready'))
   }, [])
 
   const pauseSound = useCallback(() => {
@@ -249,7 +245,11 @@ function App() {
     <>
       <main>
         <audio ref={audioRef} src="/ambient-luxury-pad.wav" loop preload="auto" />
-        <Loader onComplete={handleLoaderComplete} />
+        <Loader
+          onComplete={handleLoaderComplete}
+          onStartAudio={playSound}
+          soundOn={soundOn}
+        />
         <CustomScrollbar lenis={lenisInstance} visible={isLoaded} />
         <StaggeredMenu
           isOpen={menuState === 'open'}

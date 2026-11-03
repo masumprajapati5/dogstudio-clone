@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import './Loader.css'
 
-const Loader = ({ onComplete }) => {
+const Loader = ({ onComplete, onStartAudio, soundOn = true }) => {
   const [mounted, setMounted] = useState(true)
+  const [needsClick, setNeedsClick] = useState(false)
 
   const wrapperRef = useRef(null)
   const mainLayerRef = useRef(null)
@@ -11,14 +12,27 @@ const Loader = ({ onComplete }) => {
   const prelayer2Ref = useRef(null) // Midnight (#16192b)
   const prelayer3Ref = useRef(null) // Charcoal (#0b0c10)
   const contentRef = useRef(null)
+  const enterRef = useRef(null)
   const canvasRef = useRef(null)
   const progressCircleRef = useRef(null)
   const animTriggeredRef = useRef(false)
+  const hasInteractedRef = useRef(false)
+
   const onCompleteRef = useRef(onComplete)
+  const onStartAudioRef = useRef(onStartAudio)
+  const soundOnRef = useRef(soundOn)
 
   useEffect(() => {
     onCompleteRef.current = onComplete
   }, [onComplete])
+
+  useEffect(() => {
+    onStartAudioRef.current = onStartAudio
+  }, [onStartAudio])
+
+  useEffect(() => {
+    soundOnRef.current = soundOn
+  }, [soundOn])
 
   // 1. Dog Canvas Runner — high-precision, rock-solid frame animation
   useEffect(() => {
@@ -66,7 +80,101 @@ const Loader = ({ onComplete }) => {
     }
   }, [])
 
-  // 2. Exact 2-Second Loader Progress & Staggered Wipe Trigger
+  const startStaggeredExit = () => {
+    if (animTriggeredRef.current) return
+    animTriggeredRef.current = true
+
+    const mainLayer = mainLayerRef.current
+    const pre1 = prelayer1Ref.current
+    const pre2 = prelayer2Ref.current
+    const pre3 = prelayer3Ref.current
+    const content = contentRef.current
+    const enterEl = enterRef.current
+
+    if (!mainLayer || !pre1 || !pre2 || !pre3) {
+      if (onCompleteRef.current) onCompleteRef.current()
+      setMounted(false)
+      return
+    }
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setMounted(false)
+      },
+    })
+
+    // A) Fade out dog, progress circle, and enter button
+    if (content) {
+      tl.to(
+        content,
+        {
+          opacity: 0,
+          scale: 0.92,
+          duration: 0.22,
+          ease: 'power2.in',
+        },
+        0
+      )
+    }
+
+    if (enterEl) {
+      tl.to(
+        enterEl,
+        {
+          opacity: 0,
+          y: -10,
+          duration: 0.2,
+          ease: 'power2.in',
+        },
+        0
+      )
+    }
+
+    // B) Multi-layer staggered wipe to the left (xPercent: -100)
+    const layers = [mainLayer, pre1, pre2, pre3]
+    const layerDuration = 0.72
+
+    layers.forEach((layer, i) => {
+      tl.to(
+        layer,
+        {
+          xPercent: -100,
+          duration: layerDuration,
+          ease: 'power4.inOut',
+        },
+        0.04 + i * 0.07
+      )
+    })
+
+    // C) Trigger Hero Section entrance together as the last layer wipes across and clears
+    tl.call(
+      () => {
+        if (onCompleteRef.current) {
+          onCompleteRef.current()
+        }
+      },
+      null,
+      0.44
+    )
+  }
+
+  const handleUserClick = (e) => {
+    if (e) {
+      e.stopPropagation()
+    }
+    hasInteractedRef.current = true
+
+    if (soundOnRef.current && onStartAudioRef.current) {
+      onStartAudioRef.current().catch(() => {})
+    }
+
+    if (needsClick) {
+      setNeedsClick(false)
+      startStaggeredExit()
+    }
+  }
+
+  // 2. Exact 2-Second Loader Progress & Auto / Interactive Gate
   useEffect(() => {
     const circumference = 420.973415581
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
@@ -74,68 +182,33 @@ const Loader = ({ onComplete }) => {
     const startTime = performance.now()
     let rafId
 
-    const startStaggeredExit = () => {
-      if (animTriggeredRef.current) return
-      animTriggeredRef.current = true
-
-      const mainLayer = mainLayerRef.current
-      const pre1 = prelayer1Ref.current
-      const pre2 = prelayer2Ref.current
-      const pre3 = prelayer3Ref.current
-      const content = contentRef.current
-
-      if (!mainLayer || !pre1 || !pre2 || !pre3) {
-        if (onCompleteRef.current) onCompleteRef.current()
-        setMounted(false)
+    const handleProgressDone = () => {
+      // If user already clicked anywhere while the dog was running
+      if (hasInteractedRef.current) {
+        if (soundOnRef.current && onStartAudioRef.current) {
+          onStartAudioRef.current().catch(() => {})
+        }
+        startStaggeredExit()
         return
       }
 
-      const tl = gsap.timeline({
-        onComplete: () => {
-          setMounted(false)
-        },
-      })
-
-      // A) Fade out dog & progress circle gently
-      if (content) {
-        tl.to(
-          content,
-          {
-            opacity: 0,
-            scale: 0.92,
-            duration: 0.22,
-            ease: 'power2.in',
-          },
-          0
-        )
+      // If sound is off or no audio starter, exit directly
+      if (!soundOnRef.current || !onStartAudioRef.current) {
+        startStaggeredExit()
+        return
       }
 
-      // B) Multi-layer staggered wipe to the left (xPercent: -100)
-      const layers = [mainLayer, pre1, pre2, pre3]
-      const layerDuration = 0.72
-
-      layers.forEach((layer, i) => {
-        tl.to(
-          layer,
-          {
-            xPercent: -100,
-            duration: layerDuration,
-            ease: 'power4.inOut',
-          },
-          0.04 + i * 0.07
-        )
-      })
-
-      // C) Trigger Hero Section entrance together as the last layer wipes across and clears
-      tl.call(
-        () => {
-          if (onCompleteRef.current) {
-            onCompleteRef.current()
-          }
-        },
-        null,
-        0.44
-      )
+      // Check if the browser allows unmuted audio autoplay
+      onStartAudioRef.current()
+        .then(() => {
+          // Browser allowed autoplay! Wipe open seamlessly
+          startStaggeredExit()
+        })
+        .catch(() => {
+          // Browser blocked unmuted autoplay due to policy!
+          // Display the 'Click to Enter' interactive prompt
+          setNeedsClick(true)
+        })
     }
 
     const tick = (now) => {
@@ -153,7 +226,7 @@ const Loader = ({ onComplete }) => {
         if (progressCircleRef.current) {
           progressCircleRef.current.style.strokeDashoffset = '0'
         }
-        startStaggeredExit()
+        handleProgressDone()
       }
     }
 
@@ -164,12 +237,27 @@ const Loader = ({ onComplete }) => {
     }
   }, [])
 
+  // Auto-enter fallback after 4.5 seconds if user is idle
+  useEffect(() => {
+    if (needsClick) {
+      const fallbackTimer = setTimeout(() => {
+        startStaggeredExit()
+      }, 4500)
+      return () => clearTimeout(fallbackTimer)
+    }
+  }, [needsClick])
+
   if (!mounted) return null
 
   const circumference = 420.973415581
 
   return (
-    <div ref={wrapperRef} className="site-loader-wrapper" aria-label="Loading site">
+    <div
+      ref={wrapperRef}
+      className={`site-loader-wrapper ${needsClick ? 'needs-click' : ''}`}
+      onClick={handleUserClick}
+      aria-label="Loading site"
+    >
       {/* Prelayers stacked under the main layer for staggered wipe */}
       <div ref={prelayer3Ref} className="loader-prelayer prelayer-3" aria-hidden="true" />
       <div ref={prelayer2Ref} className="loader-prelayer prelayer-2" aria-hidden="true" />
@@ -200,6 +288,22 @@ const Loader = ({ onComplete }) => {
             </svg>
           </div>
         </div>
+
+        {/* Cinematic 'Click to Enter' gate when browser blocks unmuted autoplay */}
+        {needsClick && (
+          <div ref={enterRef} className="loader-enter-container">
+            <button
+              type="button"
+              className="loader-enter-btn"
+              onClick={handleUserClick}
+              aria-label="Enter experience with sound"
+            >
+              <span className="enter-dot" aria-hidden="true" />
+              <span className="enter-text">CLICK TO ENTER</span>
+            </button>
+            <span className="enter-subtext">Click anywhere to explore with sound</span>
+          </div>
+        )}
       </div>
     </div>
   )
