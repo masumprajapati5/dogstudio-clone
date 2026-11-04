@@ -54,12 +54,10 @@ const Loader = ({ onComplete, onStartAudio }) => {
 
       ctx.clearRect(0, 0, 130, 130)
 
-      // Draw shadow
       if (shadowImg.complete && shadowImg.naturalWidth) {
         ctx.drawImage(shadowImg, (130 - 128) / 2, 88, 128, 16)
       }
 
-      // Draw animated red running dog (16 frames of 256x256 in 4096x256 image)
       if (dogImg.complete && dogImg.naturalWidth) {
         ctx.drawImage(dogImg, frame * 256, 0, 256, 256, 0, 0, 130, 130)
       }
@@ -74,7 +72,6 @@ const Loader = ({ onComplete, onStartAudio }) => {
     }
   }, [])
 
-  // 2. Dog Loader Progress (0% -> 100%) -> Smoothly Reveal the 2 Action Buttons
   useEffect(() => {
     const circumference = 420.973415581
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
@@ -97,7 +94,6 @@ const Loader = ({ onComplete, onStartAudio }) => {
         if (progressCircleRef.current) {
           progressCircleRef.current.style.strokeDashoffset = '0'
         }
-        // When progress hits 100%, reveal the 2 audio buttons smoothly
         setShowButtons(true)
       }
     }
@@ -109,7 +105,6 @@ const Loader = ({ onComplete, onStartAudio }) => {
     }
   }, [])
 
-  // 3. Staggered Curtain Wipe into Site
   const startStaggeredExit = (withAudio) => {
     if (animTriggeredRef.current) return
     animTriggeredRef.current = true
